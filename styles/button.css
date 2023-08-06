@@ -6,6 +6,8 @@
     transition: all 0.5s ease;
     border-radius: 0;
     margin: 8px 0;
+    background: rgb(236, 201, 0.8);
+    border: 1px solid rgb(236, 201, 0.8);
 }
 
 .button:hover {

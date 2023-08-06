@@ -312,7 +312,7 @@ export class FirebaseService {
   HandleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
     try {
-      await signInWithPopup(auth, provider);
+      await signInWithPopup(this.auth, provider);
       // Login com o Google bem-sucedido
     } catch (error) {
       console.log(error);
@@ -335,38 +335,59 @@ export function initService() {
 // Custom Events
 document.addEventListener("DOMContentLoaded", function () {
   initService();
-  const event = new CustomEvent("onCustomFirebaseLoaded", {
+  const event = new CustomEvent("on_firebase_loaded", {
     detail: {
       firebaseLoaded: true,
     },
   });
+  document.dispatchEvent(event);
 
-  document.querySelector("body").dispatchEvent(event);
-});
-
-window.addEventListener("onGoogleLoginEvent", function (event) {
-  console.error("[Event]: [GOOGLE_LOGIN_EVENT] : event", event);
-  try {
-    window.FirebaseService.HandleGoogleLogin();
-  } catch (error) {
-    console.error(
-      "[Event]: [GOOGLE_LOGIN_EVENT] : Erro ao efetuar login",
-      error
+  document.addEventListener("GOOGLE_LOGIN_EVENT", async function (event) {
+    console.log(
+      "[Event]: [GOOGLE_LOGIN_EVENT] : Efetuando login : event",
+      event
     );
-  }
-});
+    try {
+      await window.FirebaseService.HandleGoogleLogin()
+        .then((data) => {
+          const customer = data.user;
+          const event = new CustomEvent("GOOGLE_LOGIN_EVENT_SUCCESS", {
+            detail: {
+              data: customer,
+              sucess: true,
+            },
+          });
+          document.dispatchEvent(event);
+        })
+        .catch((error) => {
+          const event = new CustomEvent("GOOGLE_LOGIN_EVENT_ERROR", {
+            detail: {
+              data: error,
+              success: false,
+            },
+          });
+          document.dispatchEvent(event);
+        });
+    } catch (error) {
+      console.error(
+        "[Event]: [GOOGLE_LOGIN_EVENT] : Erro ao efetuar login",
+        error
+      );
+    }
+  });
 
-window.addEventListener("onGoogleLogoutEvent", function (event) {
-  console.error(
-    "[Event]: [GOOGLE_LOGOUT_EVENT] : Erro ao efetuar login",
-    event
-  );
-  try {
-    window.FirebaseService.HandleGoogleLogin();
-  } catch (error) {
+  document.addEventListener("GOOGLE_LOGOUT_EVENT", function (event) {
     console.error(
-      "[Event]: [GOOGLE_LOGOUT_EVENT] : Erro ao efetuar logout",
-      error
+      "[Event]: [GOOGLE_LOGOUT_EVENT] : Erro ao efetuar login",
+      event
     );
-  }
+    try {
+      window.FirebaseService.HandleGoogleLogin();
+    } catch (error) {
+      console.error(
+        "[Event]: [GOOGLE_LOGIN_EVENT] : Erro ao efetuar login",
+        error
+      );
+    }
+  });
 });
