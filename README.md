@@ -56,7 +56,7 @@ const firebaseConfig = {
 
 * Website: instragram.com/anderson.lima.dev
 * Twitter: [@andersonlimahw](https://twitter.com/andersonlimahw)
-* Github: [@andersonlimahe](https://github.com/andersonlimahe)
+* Github: [@andersonlimahw](https://github.com/andersonlimahe)
 * LinkedIn: [@andersonlimahw](https://linkedin.com/in/andersonlimahw)
 
 ## Show your support
