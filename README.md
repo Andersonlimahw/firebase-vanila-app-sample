@@ -44,6 +44,12 @@ const firebaseConfig = {
 
 ```
 
+
+## More samples using reactjs, typescritpt and firebase via npm packages.
+
+🔥 [Reactjs : Chat sample ](https://github.com/Andersonlimahw/firebase-chat-sample)
+🔥 [Reactjs : Notifications sample ](https://github.com/Andersonlimahw/firebase-notifications-sample)
+
 ## Author
 
 👤 **Anderson Lima**
