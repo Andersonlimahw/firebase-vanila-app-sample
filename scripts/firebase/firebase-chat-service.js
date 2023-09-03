@@ -1,4 +1,5 @@
 import { renderInElement } from "../utils/render-in-element.js";
+import { initService } from './firebase-service.js';
 
 const chatId = "#firebase-sample";
 
@@ -11,7 +12,7 @@ export class FirebaseChatService {
   Log() {
     console.log(
       "[FirebaseChatService]:[ListChat] LOG()",
-      window.FirebaseService,
+      this,
       " Instance: ",
       this._firebaseService,
       "CollectionName: ",
@@ -91,8 +92,9 @@ export class FirebaseChatService {
 }
 
 function init() {
-  const firebaseInstance = new FirebaseChatService(window.FirebaseService);
-  window.FirebaseChatService = firebaseInstance;
+  const firebaseService = initService();
+  const firebaseInstance = new FirebaseChatService(firebaseService);
+
   console.log(
     "👌 [FirebaseChatService] : Init : serviço iniciado com sucesso",
     firebaseInstance
@@ -132,8 +134,7 @@ function dispatchCustomEvents() {
 document.querySelector(chatId).addEventListener("onCustomFirebasechatLoaded", (event) => {
   console.log(
     "👌 [FirebaseChatService][onCustomFirebasechatLoaded] : Init : serviço iniciado com sucesso, event: ",
-    event, 
-    'Service: ',  window.FirebaseChatService
+    event
   );
   const content = `
   <h2>

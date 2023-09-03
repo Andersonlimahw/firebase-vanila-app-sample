@@ -32,7 +32,6 @@ import {
 
 import { renderInElement } from "../utils/render-in-element.js";
 
-// TODO :  mudar config antes de comitar
 const firebaseConfig = {
   apiKey: "<YOUR_VALUE>",
   authDomain: "<YOUR_VALUE>",
